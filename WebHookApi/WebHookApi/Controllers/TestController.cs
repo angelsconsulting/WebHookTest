@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebHookApi.Controllers
 {
     [Route("api/[controller]")]
@@ -10,19 +8,17 @@ namespace WebHookApi.Controllers
     {
         private static readonly List<string> Values = new();
 
-        // GET: api/<TestController>
+        // GET: api/Test
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            //return new string[] { "value1", "value2" };
             return Values;
         }
 
-        // GET api/<TestController>/5
+        // GET api/Test/1
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            //return "value";
             var value = string.Empty;
             if (id >= 0 && id < Values.Count)
             {
@@ -31,18 +27,14 @@ namespace WebHookApi.Controllers
             return value;
         }
 
-        // POST api/<TestController>
+        // POST api/Test
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] object value)
         {
-            if (!string.IsNullOrWhiteSpace(value) &&
-                !Values.Exists(x => string.Equals(x, value, StringComparison.CurrentCultureIgnoreCase)))
-            {
-                Values.Add(value);
-            }
+            Values.Add(value.ToString());
         }
 
-        // PUT api/<TestController>/5
+        // PUT api/Test/1
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
@@ -52,7 +44,7 @@ namespace WebHookApi.Controllers
             }
         }
 
-        // DELETE api/<TestController>/5
+        // DELETE api/Test/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
